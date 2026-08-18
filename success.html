@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অর্ডার সফল হয়েছে</title>
+
+  
+
+    <!-- ==========================================================
+         Facebook Pixel — শুধু PageView এর জন্য।
+         Purchase event এখন সম্পূর্ণ server-side (n8n → Facebook CAPI)
+         থেকে যায়, শুধুমাত্র WooCommerce এ order "completed" ভেরিফাই
+         হলে। এখানে client-side Purchase ইচ্ছাকৃতভাবে বাদ দেওয়া হয়েছে
+         যাতে fake/unverified order pixel এ না যায়।
+         ========================================================== -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1322392469424735'); // ✅ আপনার আসল Pixel ID বসানো হয়েছে
+    fbq('track', 'PageView');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --teal-900:#0b3d2e; --teal-800:#0f4c3a; --teal-700:#136b4f; --teal-600:#178a63;
+            --teal-100:#e3f6ee; --teal-50:#f2fbf7;
+            --amber-500:#f59e0b; --amber-600:#d97706;
+            --red-600:#e11d48;
+            --whatsapp:#25d366; --whatsapp-dark:#1ebe57;
+            --ink-900:#0f172a; --ink-700:#334155; --ink-600:#475569; --ink-500:#64748b;
+            --line:#e2e8f0; --bg-soft:#f7faf9;
+            --shadow-md:0 10px 30px rgba(15,23,42,.10);
+            --shadow-lg:0 20px 50px rgba(15,23,42,.18);
+        }
+        *{box-sizing:border-box;}
+        body{
+            font-family:'Hind Siliguri',sans-serif;margin:0;min-height:100vh;
+            background:linear-gradient(160deg,var(--teal-900),var(--teal-700));
+            display:flex;align-items:center;justify-content:center;padding:24px 16px;
+        }
+        .box{background:#fff;border-radius:24px;max-width:460px;width:100%;padding:0;overflow:hidden;box-shadow:var(--shadow-lg);}
+        .box-top{background:linear-gradient(135deg,var(--teal-600),var(--teal-800));padding:36px 24px 30px;text-align:center;color:#fff;}
+        .check-circle{
+            width:72px;height:72px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;
+            margin:0 auto 16px;box-shadow:0 8px 20px rgba(0,0,0,.15);
+        }
+        .check-circle svg{width:38px;height:38px;color:var(--teal-600);}
+        .box-top h1{font-size:1.4rem;margin:0 0 6px;font-weight:800;}
+        .box-top p{margin:0;font-size:.95rem;opacity:.9;}
+
+        .box-body{padding:26px 24px 30px;}
+
+        .detail{background:var(--teal-50);border:1px solid var(--teal-100);border-radius:14px;padding:16px 18px;margin-bottom:20px;}
+        .detail div{display:flex;justify-content:space-between;padding:6px 0;font-size:.95rem;color:var(--ink-700);}
+        .detail div:not(:last-child){border-bottom:1px dashed var(--line);}
+        .detail b{color:var(--ink-900);}
+
+        .delivery-note{
+            background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1.5px solid var(--amber-500);
+            border-radius:14px;padding:16px 18px;margin-bottom:16px;
+        }
+        .delivery-note .title{display:flex;align-items:center;gap:8px;font-weight:800;color:#7c2d12;margin-bottom:8px;font-size:.98rem;}
+        .delivery-note ul{margin:0;padding-left:20px;color:#7c2d12;font-size:.92rem;line-height:1.7;}
+        .delivery-note li{margin-bottom:2px;}
+
+        .phone-note{
+            background:var(--teal-50);border:1.5px solid var(--teal-600);border-radius:14px;
+            padding:15px 18px;margin-bottom:22px;display:flex;gap:12px;align-items:flex-start;
+        }
+        .phone-note svg{width:24px;height:24px;color:var(--teal-700);flex-shrink:0;margin-top:2px;}
+        .phone-note p{margin:0;font-size:.92rem;color:var(--teal-900);font-weight:600;line-height:1.6;}
+
+        .actions{display:flex;flex-direction:column;gap:10px;}
+        .home-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));color:#fff;padding:15px;border-radius:999px;text-decoration:none;font-weight:700;font-size:1rem;}
+        .wa-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--whatsapp),var(--whatsapp-dark));color:#fff;padding:15px;border-radius:999px;text-decoration:none;font-weight:700;font-size:1rem;}
+        .wa-btn svg{width:20px;height:20px;}
+
+        .note{margin-top:18px;text-align:center;font-size:.85rem;color:var(--ink-500);}
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5L84NTH2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="box">
+        <div class="box-top">
+            <div class="check-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h1>অর্ডার সফলভাবে গ্রহণ করা হয়েছে!</h1>
+            <p>ধন্যবাদ, আমরা আপনার অর্ডারটি পেয়েছি</p>
+        </div>
+
+        <div class="box-body">
+            <div class="detail" id="orderDetail">
+                <div><span>অর্ডার আইডি</span><b id="oid">—</b></div>
+                <div><span>নাম</span><b id="oname">—</b></div>
+                <div><span>মূল্য</span><b id="oprice">—</b></div>
+            </div>
+
+            <div class="delivery-note">
+                <div class="title">🚚 ডেলিভারি সময়সূচি</div>
+                <ul>
+                    <li>ঢাকার মধ্যে: <b>১-২ কার্যদিবস</b></li>
+                    <li>ঢাকার বাইরে: <b>২-৪ কার্যদিবস</b></li>
+                </ul>
+            </div>
+
+            <div class="phone-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <p>সংগ্রহী, আপনার হাতে আমাদের ডেলিভারি ম্যান প্রোডাক্ট পৌঁছিয়ে দিবেন। অনুগ্রহ করে আপনার মোবাইল নম্বরটি সচল রাখবেন — ডেলিভারির সময় ডেলিভারি ম্যান আপনাকে কল দিবেন।</p>
+            </div>
+
+            <div class="actions">
+                <a href="index.html" class="home-btn">🏠 হোমপেজে ফিরে যান</a>
+                <a href="https://wa.me/8801958488957" target="_blank" class="wa-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.05c-.24.68-1.4 1.3-1.93 1.37-.5.08-1.12.11-1.81-.11-.42-.14-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.52-.09.19-.14.31-.28.48-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.07.11.07.63-.17 1.31z"/></svg>
+                    হোয়াটসঅ্যাপে যোগাযোগ করুন
+                </a>
+            </div>
+
+            <p class="note">প্রয়োজনে কল করুন: ০১৯৫৮৪৮৮৯৫৭</p>
+        </div>
+    </div>
+
+        <script>
+        // অর্ডারের তথ্য দেখানোর জন্য (UI purpose)
+        const data = JSON.parse(sessionStorage.getItem('last_order') || '{}');
+        if (data.order_id) {
+            document.getElementById('oid').textContent = '#' + data.order_id;
+            document.getElementById('oname').textContent = data.name || '—';
+            document.getElementById('oprice').textContent = '৳ ' + (data.price || '—');
+
+            // ====== Browser Side Purchase Event (Deduplication with n8n) ======
+            // এখানে eventID হিসেবে data.order_id দেওয়া হলো।
+            // n8n থেকেও একই order_id event_id হিসেবে যাচ্ছে, তাই ফেসবুক ডাটা দুবার কাউন্ট করবে না।
+            // value সবসময় dynamic (আসল order price) — fallback 700, কখনো undefined যাবে না
+            const purchaseValue = Number(data.price) || 700;
+            fbq('track', 'Purchase', {
+                value: purchaseValue,
+                currency: 'BDT',
+                content_name: 'জিনসেং ক্যাপসুল'
+            }, {
+                eventID: data.order_id
+            });
+            // ==================================================================
+
+        } else {
+            document.getElementById('orderDetail').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ginseng",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-25",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "ORDER_KV",
+      "id": "b4f214b72d9a4afbbd17c7d326d93d71"
+    }
+  ]
+}
